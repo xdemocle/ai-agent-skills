@@ -1,59 +1,259 @@
-# Claude Capabilities
+# AI Agent Skills
 
-Plugins that turn Claude into a specialist for your role, team, and company. Built for [Claude Desktop](https://claude.com/product/overview).
+An agnostic collection of AI Agent Skills — reusable expertise packages that make AI agents better at specialized tasks across any platform.
 
-## Why Plugins
+## What are Skills?
 
-Cowork lets you set the goal and Claude delivers finished, professional work. Plugins let you go further: tell Claude how you like work done, which tools and data to pull from, how to handle critical workflows, and what slash commands to expose — so your team gets better and more consistent outcomes.
+Skills are organized packages of instructions, executable code, and resources that give AI agents specialized capabilities. Think of them as expertise modules that agents can discover and load dynamically to:
 
-Each plugin bundles the skills, connectors, slash commands, and sub-agents for a specific job function. Out of the box, they give Claude a strong starting point for helping anyone in that role. The real power comes when you customize them for your company — your tools, your terminology, your processes — so Claude works like it was built for your team.
+- Follow domain-specific workflows and best practices
+- Create professional documents and reports
+- Perform complex data analysis and visualization
+- Apply company-specific branding and standards
+- Automate business processes with real domain knowledge
 
-## Plugin Marketplace
+Skills follow the open [Agent Skills standard](https://agentskills.io), making them portable across platforms and tools — not locked to any single vendor.
 
-Anthropic is open-sourcing some plugins built and inspired by our own work:
+## How Skills Work
 
-| Plugin                                                    | How it helps                                                                                                                             | Connectors                                                                                        |
-| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **[productivity](./collection/productivity)**             | Manage tasks, calendars, daily workflows, and personal context so you spend less time repeating yourself.                                | Slack, Notion, Asana, Linear, Jira, Monday, ClickUp, Microsoft 365                                |
-| **[sales](./collection/sales)**                           | Research prospects, prep for calls, review your pipeline, draft outreach, and build competitive battlecards.                             | Slack, HubSpot, Close, Clay, ZoomInfo, Notion, Jira, Fireflies, Microsoft 365                     |
-| **[customer-support](./collection/customer-support)**     | Triage tickets, draft responses, package escalations, research customer context, and turn resolved issues into knowledge base articles.  | Slack, Intercom, HubSpot, Guru, Jira, Notion, Microsoft 365                                       |
-| **[product-management](./collection/product-management)** | Write specs, plan roadmaps, synthesize user research, keep stakeholders updated, and track the competitive landscape.                    | Slack, Linear, Asana, Monday, ClickUp, Jira, Notion, Figma, Amplitude, Pendo, Intercom, Fireflies |
-| **[marketing](./collection/marketing)**                   | Draft content, plan campaigns, enforce brand voice, brief on competitors, and report on performance across channels.                     | Slack, Canva, Figma, HubSpot, Amplitude, Notion, Ahrefs, SimilarWeb, Klaviyo                      |
-| **[legal](./collection/legal)**                           | Review contracts, triage NDAs, navigate compliance, assess risk, prep for meetings, and draft templated responses.                       | Slack, Box, Egnyte, Jira, Microsoft 365                                                           |
-| **[finance](./collection/finance)**                       | Prep journal entries, reconcile accounts, generate financial statements, analyze variances, manage close, and support audits.            | Snowflake, Databricks, BigQuery, Slack, Microsoft 365                                             |
-| **[data](./collection/data)**                             | Query, visualize, and interpret datasets — write SQL, run statistical analysis, build dashboards, and validate your work before sharing. | Snowflake, Databricks, BigQuery, Hex, Amplitude, Jira                                             |
+Every skill follows the same core structure:
 
-Install these directly from Cowork, browse the full collection here on GitHub, or build your own.
-
-## Getting Started
-
-## How Plugins Work
-
-Every plugin follows the same structure:
-
-```markdown
-plugin-name/
-├── .mcp.json # Tool connections
-├── commands/ # Slash commands you invoke explicitly
-└── skills/ # Domain knowledge Claude draws on automatically
+```
+skill-name/
+├── SKILL.md              # Required: metadata + instructions
+├── scripts/              # Optional: executable code (Python, JS, Shell)
+│   └── processor.py
+├── templates/            # Optional: output templates
+│   └── template.xlsx
+├── references/           # Optional: documentation, guidelines
+│   └── REFERENCE.md
+├── examples/             # Optional: sample inputs/outputs
+│   └── sample.md
+└── resources/            # Optional: assets, data files
+    └── logo.png
 ```
 
-- **Skills** encode the domain expertise, best practices, and step-by-step workflows Claude needs to give you useful help. Claude draws on them automatically when relevant.
-- **Commands** are explicit actions you trigger (e.g., `/finance:reconciliation`, `/product-management:write-spec`).
-- **Connectors** wire Claude to the external tools your role depends on — CRMs, project trackers, data warehouses, design tools, and more — via [MCP servers](https://modelcontextprotocol.io/).
+### The SKILL.md file
 
-Every component is file-based — markdown and JSON, no code, no infrastructure, no build steps.
+The only required file. It starts with YAML frontmatter (metadata) followed by markdown instructions:
 
-## Making Them Yours
+```yaml
+---
+name: my-skill
+description: >
+  Clear description of what this skill does and when an agent
+  should use it. This is the most critical part — it determines
+  when the skill gets activated. (max 200 chars)
+---
 
-These plugins are generic starting points. They become much more useful when you customize them for how your company actually works:
+# My Skill
 
-- **Swap connectors** — Edit `.mcp.json` to point at your specific tool stack.
-- **Add company context** — Drop your terminology, org structure, and processes into skill files so Claude understands your world.
-- **Adjust workflows** — Modify skill instructions to match how your team actually does things, not how a textbook says to.
+## When to use this skill
+Explain the triggers and conditions.
 
-As your team builds and shares plugins, Claude becomes a cross-functional expert. The context you define gets baked into every relevant interaction, so leaders and admins can spend less time enforcing processes and more time improving them.
+## Instructions
+Step-by-step workflow the agent should follow.
+
+## Examples
+Show what good output looks like.
+
+## Guidelines
+Constraints, edge cases, quality standards.
+```
+
+**The `name` and `description` are the only parts that influence auto-activation.** Agents read these to decide whether to load the skill. Everything below the frontmatter is the actual knowledge and instructions.
+
+### Progressive Disclosure
+
+Skills use a layered loading approach to keep things efficient:
+
+1. **Frontmatter** — Agent scans name + description to decide if the skill is relevant
+2. **SKILL.md body** — Full instructions load only when the skill is activated
+3. **Supporting files** — Scripts, references, and templates load only when needed during execution
+
+This means you can build deep, detailed skills without bloating every conversation.
+
+## Skill Categories
+
+### Role-Based Packs
+
+Skills organized by job function — bundle the workflows, terminology, and best practices for a specific role.
+
+| Pack                   | What it covers                                                           |
+| ---------------------- | ------------------------------------------------------------------------ |
+| **productivity**       | Task management, daily workflows, meeting prep, personal context         |
+| **sales**              | Prospect research, call prep, pipeline review, outreach, battlecards     |
+| **customer-support**   | Ticket triage, response drafting, escalation, knowledge base creation    |
+| **product-management** | Specs, roadmaps, user research synthesis, stakeholder updates            |
+| **marketing**          | Content drafting, campaign planning, brand voice, competitor briefs      |
+| **legal**              | Contract review, NDA triage, compliance, risk assessment                 |
+| **finance**            | Journal entries, reconciliation, financial statements, variance analysis |
+| **data**               | SQL generation, statistical analysis, dashboards, data validation        |
+
+### Document & Format Skills
+
+Skills for creating and manipulating specific file formats.
+
+| Skill    | Output                                                    |
+| -------- | --------------------------------------------------------- |
+| **xlsx** | Excel spreadsheets with formulas, charts, pivot tables    |
+| **pptx** | PowerPoint presentations with layouts and branding        |
+| **pdf**  | PDF generation, form filling, merging, extraction         |
+| **docx** | Word documents with tracked changes, comments, formatting |
+
+### Domain Skills
+
+Skills encoding expertise for specific fields — financial analysis, code review, brand guidelines, data pipelines, and more.
+
+## Platform Compatibility
+
+Skills are portable by design. The same `SKILL.md` works across:
+
+| Platform         | How skills are loaded                                  |
+| ---------------- | ------------------------------------------------------ |
+| **Claude.ai**    | Upload as ZIP via Settings > Capabilities > Skills     |
+| **Claude Code**  | Place in `.claude/skills/` directory (auto-discovered) |
+| **Claude API**   | Upload via `/v1/skills` endpoint                       |
+| **Other agents** | Any platform supporting the Agent Skills standard      |
+
+### Claude Code discovery paths
+
+```
+~/.config/claude/skills/    # Personal (available in all projects)
+.claude/skills/             # Project-level (committed to version control)
+packages/*/. claude/skills/  # Monorepo subdirectory skills
+```
+
+Priority: enterprise > personal > project.
+
+### Connectors
+
+Skills can be paired with tool connectors (MCP servers, API integrations, etc.) to give agents access to external services — CRMs, project trackers, data warehouses, design tools. Connector configuration is platform-dependent, but the skills themselves remain portable.
+
+## Building Your Own
+
+### 1. Define the problem
+
+Be specific. "Extract financial data from PDFs and format as CSV" beats "help with finance stuff." Ask yourself:
+
+- What specific task does this skill handle?
+- What should trigger it?
+- What does good output look like?
+- What are the edge cases?
+
+### 2. Write the SKILL.md
+
+Start with a strong description — it's the most important part. The description determines when an agent decides to activate your skill.
+
+```yaml
+---
+name: invoice-generator
+description: >
+  Generate professional invoices from line items or timesheets.
+  Use when user mentions invoices, billing, or payment documents.
+---
+```
+
+### 3. Keep it modular
+
+If your skill covers multiple workflows, use a menu approach — describe what's available in SKILL.md and reference separate files for each path:
+
+```markdown
+## Available workflows
+
+- **Standard invoice** → see [templates/standard.md](templates/standard.md)
+- **Recurring billing** → see [templates/recurring.md](templates/recurring.md)
+- **Credit note** → see [templates/credit-note.md](templates/credit-note.md)
+```
+
+The agent reads only the relevant file, not everything.
+
+### 4. Add executable code (optional)
+
+Skills can bundle scripts that the agent runs during execution:
+
+```
+my-skill/
+├── SKILL.md
+└── scripts/
+    ├── analyze.py
+    └── validate.sh
+```
+
+Reference them from your SKILL.md so the agent knows when to use them.
+
+### 5. Test and iterate
+
+Test with different prompts and edge cases. Common issues:
+
+- Description too generic → skill activates when it shouldn't
+- Description too narrow → skill misses relevant requests
+- Instructions too vague → inconsistent output quality
+- Too much content loaded at once → slow, token-heavy execution
+
+## Making Skills Your Own
+
+The skills in this collection are starting points. They become much more useful when you customize them:
+
+- **Add company context** — Drop your terminology, org structure, and processes into skill files so the agent understands your world.
+- **Adjust workflows** — Modify instructions to match how your team actually does things, not how a textbook says to.
+- **Swap connectors** — Point tool configurations at your specific stack.
+- **Combine skills** — Multiple skills can activate together for complex tasks. Design them to work well alongside each other.
+
+## Common Use Cases
+
+**Reporting & Analysis** — Automated quarterly reports, budget variance analysis, KPI dashboards, portfolio reviews.
+
+**Document Automation** — Branded presentations, cross-format conversion (CSV → Excel → PowerPoint → PDF), template-based generation.
+
+**Workflow Standardization** — Code review processes, onboarding procedures, compliance checklists, content approval flows.
+
+**Domain Expertise** — Financial modeling, legal document review, competitive analysis, data validation frameworks.
+
+## Project Structure
+
+```
+ai-agent-skills/
+├── skills/                       # Skill collection
+│   ├── document/                 # Document format skills
+│   │   ├── xlsx/
+│   │   ├── pptx/
+│   │   ├── pdf/
+│   │   └── docx/
+│   ├── roles/                    # Role-based skill packs
+│   │   ├── productivity/
+│   │   ├── sales/
+│   │   ├── customer-support/
+│   │   ├── product-management/
+│   │   ├── marketing/
+│   │   ├── legal/
+│   │   ├── finance/
+│   │   └── data/
+│   └── domain/                   # Domain-specific skills
+│       ├── brand-guidelines/
+│       ├── code-review/
+│       └── ...
+├── templates/                    # Starter templates
+│   └── skill-template/
+│       └── SKILL.md
+├── docs/                         # Documentation
+├── CONTRIBUTING.md
+├── LICENSE
+└── README.md
+```
+
+## Resources
+
+- [Agent Skills Open Standard](https://agentskills.io) — Cross-platform specification
+- [Anthropic Skills Repository](https://github.com/anthropics/skills) — Reference implementations
+- [Skills Best Practices](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices) — Authoring guidelines
+- [Equipping Agents with Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) — Engineering deep dive
+- [Skills Explained](https://claude.com/blog/skills-explained) — How skills compare to prompts, projects, MCP, and subagents
 
 ## Contributing
 
-Plugins are just markdown files. Fork the repo, make your changes, and submit a PR.
+Skills are just markdown files and scripts. Fork the repo, add or improve skills, and submit a PR. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
