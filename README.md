@@ -1,4 +1,4 @@
-# AI Agent Skills
+# Stackformers Agent Skills
 
 An agnostic collection of AI Agent Skills — reusable expertise packages that make AI agents better at specialized tasks across any platform.
 
@@ -103,6 +103,15 @@ See your platform's documentation for specific setup instructions.
 ### Connectors
 
 Skills can be paired with tool connectors (MCP servers, API integrations, etc.) to give agents access to external services — CRMs, project trackers, data warehouses, design tools. Connector configuration is platform-dependent, but the skills themselves remain portable.
+
+## Platform-Specific Packs
+
+This repo contains agnostic skills that work everywhere. For platform-specific workflows, rules, and configurations, check the companion repos:
+
+| Pack                                                                                                         | What's inside                                                 |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| [stackformers-windsurf-antigravity-pack](https://github.com/xdemocle/stackformers-windsurf-antigravity-pack) | Workflows, skills and rules for Windsurf and Antigravity IDEs |
+| [stackformers-cursor-pack](https://github.com/xdemocle/stackformers-cursor-pack)                             | .mdc rules and agent configs for Cursor IDE                   |
 
 ## Building Your Own
 
