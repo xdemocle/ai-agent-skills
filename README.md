@@ -90,17 +90,6 @@ Skills organized by job function — bundle the workflows, terminology, and best
 | **finance**            | Journal entries, reconciliation, financial statements, variance analysis |
 | **data**               | SQL generation, statistical analysis, dashboards, data validation        |
 
-### Document & Format Skills
-
-Skills for creating and manipulating specific file formats.
-
-| Skill    | Output                                                    |
-| -------- | --------------------------------------------------------- |
-| **xlsx** | Excel spreadsheets with formulas, charts, pivot tables    |
-| **pptx** | PowerPoint presentations with layouts and branding        |
-| **pdf**  | PDF generation, form filling, merging, extraction         |
-| **docx** | Word documents with tracked changes, comments, formatting |
-
 ### Domain Skills
 
 Skills encoding expertise for specific fields — financial analysis, code review, brand guidelines, data pipelines, and more.
@@ -215,20 +204,15 @@ The skills in this collection are starting points. They become much more useful 
 ```
 ai-agent-skills/
 ├── skills/                       # Skill collection
-│   ├── document/                 # Document format skills
-│   │   ├── xlsx/
-│   │   ├── pptx/
-│   │   ├── pdf/
-│   │   └── docx/
 │   ├── roles/                    # Role-based skill packs
-│   │   ├── productivity/
-│   │   ├── sales/
 │   │   ├── customer-support/
-│   │   ├── product-management/
-│   │   ├── marketing/
-│   │   ├── legal/
+│   │   ├── data/
 │   │   ├── finance/
-│   │   └── data/
+│   │   ├── legal/
+│   │   ├── marketing/
+│   │   ├── product-management/
+│   │   ├── productivity/
+│   │   └── sales/
 │   └── domain/                   # Domain-specific skills
 │       ├── brand-guidelines/
 │       ├── code-review/
@@ -237,7 +221,6 @@ ai-agent-skills/
 │   └── skill-template/
 │       └── SKILL.md
 ├── docs/                         # Documentation
-├── CONTRIBUTING.md
 ├── LICENSE
 └── README.md
 ```
@@ -249,10 +232,6 @@ ai-agent-skills/
 - [Skills Best Practices](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices) — Authoring guidelines
 - [Equipping Agents with Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) — Engineering deep dive
 - [Skills Explained](https://claude.com/blog/skills-explained) — How skills compare to prompts, projects, MCP, and subagents
-
-## Contributing
-
-Skills are just markdown files and scripts. Fork the repo, add or improve skills, and submit a PR. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 

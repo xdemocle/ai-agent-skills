@@ -1,268 +1,112 @@
-# Skills Cookbook - Claude Code Guide
+# AI Agent Skills — Project Guidelines
 
-## Project Overview
+## Project Identity
 
-This is a comprehensive Jupyter notebook cookbook demonstrating Claude's Skills feature for document generation (Excel, PowerPoint, PDF). It's designed for developers learning to integrate Skills into their applications.
+- **Repo**: `ai-agent-skills`
+- **Description**: An agnostic collection of AI Agent Skills
+- **Scope**: Platform-agnostic skills following the open Agent Skills standard (agentskills.io)
+- **Audience**: Developers and teams using any AI agent platform, not just Claude
 
-## Quick Start Commands
+## What This Project Is NOT
 
-### Environment Setup
+This is NOT a Claude-specific project. It is NOT a fork of Anthropic's repos. It is an independent, vendor-neutral collection. All content must reflect this.
 
-```bash
-# Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+## Excluded Content — Do NOT Reintroduce
 
-# Install dependencies (MUST use local whl for Skills support)
-pip install -r requirements.txt
+### Anthropic SDK / API Code
 
-# Configure API key
-cp .env.example .env
-# Edit .env and add your ANTHROPIC_API_KEY
+- No `client.messages.create()` or Anthropic Python SDK patterns
+- No `container={"skills": [...]}` API structures
+- No beta headers (`anthropic-beta: skills-2025-10-02`)
+- No Files API code (`client.beta.files.download`, `client.beta.files.retrieve_metadata`)
+- No `anthropic` package imports or usage examples
+- No Claude model strings (`claude-sonnet-4-5-20250929`, etc.)
+
+### Platform-Specific Features
+
+- No Cowork references or Desktop plugin installation flows
+- No Claude.ai Settings UI instructions as primary guidance
+- No Claude Code CLI-specific commands as the only path
+- No Jupyter notebook structure or notebook-based tutorials
+- No "Claude Desktop" or "Claude.ai" as the assumed environment
+
+### Document Format Skills (xlsx, pptx, pdf, docx)
+
+- These are Anthropic's built-in skills, not part of this collection
+- Do not add document creation/manipulation skills as core features
+- Do not reference Excel, PowerPoint, PDF, Word generation as key capabilities
+- If document skills are mentioned, it should be as examples of what skills CAN do, not what THIS repo provides
+
+### Vendor-Locked Connector Tables
+
+- No per-role connector lists (e.g., "Sales: Slack, HubSpot, Close, Clay...")
+- No `.mcp.json` as the only connector pattern
+- Connectors are mentioned as a concept but kept platform-agnostic
+
+### Financial Sample Data
+
+- No `financial_statements.csv`, `portfolio_holdings.json`, `budget_template.csv`, `quarterly_metrics.json`
+- The repo is general-purpose, not finance-focused
+- Use domain-neutral examples when possible
+
+### Branding and Framing
+
+- No "Claude Skills Cookbook" naming
+- No "Claude Capabilities" naming
+- No "Anthropic is open-sourcing..." framing
+- No Anthropic acknowledgments sections
+- No emojis in headers (keep it professional)
+- Do not position this as an Anthropic product or extension
+
+## Writing Style
+
+- Use "AI agent" or "agent" — not "Claude" as the default subject
+- Use simple, clear English — the audience includes non-native speakers
+- Keep it practical and direct — no hype, no filler
+- When referencing platforms, list them as options (e.g., "works across Claude, OpenAI, and other Agent Skills-compatible platforms")
+- Anthropic docs can be linked as **references**, not as primary documentation
+
+## Architecture Principles
+
+- Every skill follows the `SKILL.md` standard with YAML frontmatter
+- Skills must be self-contained and portable
+- Progressive disclosure: frontmatter → SKILL.md body → supporting files
+- Skills should work independently — no hard dependencies on other skills
+- Keep skills modular: one skill = one job
+
+## Folder Structure
+
+```
+ai-agent-skills/
+├── skills/
+│   ├── roles/                    # Role-based skill packs
+│   │   ├── productivity/
+│   │   ├── sales/
+│   │   ├── customer-support/
+│   │   ├── product-management/
+│   │   ├── marketing/
+│   │   ├── legal/
+│   │   ├── finance/
+│   │   └── data/
+│   └── domain/                   # Domain-specific skills
+│       ├── brand-guidelines/
+│       ├── code-review/
+│       └── ...
+├── templates/
+│   └── skill-template/
+│       └── SKILL.md
+├── docs/
+├── CONTRIBUTING.md
+├── LICENSE
+└── README.md
 ```
 
-### Running Notebooks
-
-```bash
-# Launch Jupyter
-jupyter notebook
-
-# Or use VSCode with Jupyter extension
-# Make sure to select the venv kernel in VSCode: Cmd+Shift+P → "Python: Select Interpreter"
-```
-
-### Testing & Verification
-
-```bash
-# Verify environment and SDK version
-python -c "import anthropic; print(f'SDK Version: {anthropic.__version__}')"
-
-# Check outputs directory for generated files
-ls -lh outputs/
-```
-
-## Architecture Overview
-
-### Directory Structure
-
-```
-skills/
-├── notebooks/              # 3 progressive Jupyter notebooks
-│   ├── 01_skills_introduction.ipynb
-│   ├── 02_skills_financial_applications.ipynb  # WIP
-│   └── 03_skills_custom_development.ipynb      # WIP
-├── sample_data/           # Financial datasets for examples
-├── custom_skills/         # Custom skill development area
-├── outputs/               # Generated files (xlsx, pptx, pdf)
-├── file_utils.py          # Files API helper functions
-└── docs/                  # Implementation tracking
-```
-
-### Key Technical Details
-
-**Beta API Requirements:**
-
-- All Skills functionality uses `client.beta.*` namespace
-- Required beta headers: `code-execution-2025-08-25`, `files-api-2025-04-14`, `skills-2025-10-02`
-- Must use `client.beta.messages.create()` with `container` parameter
-- Code execution tool (`code_execution_20250825`) is REQUIRED
-- Use pre-built Agent skills by referencing their `skill_id` or create and upload your own via the Skills API
-
-**Files API Integration:**
-
-- Skills generate files and return `file_id` attributes
-- Must use `client.beta.files.download()` to download files
-- Must use `client.beta.files.retrieve_metadata()` to get file info
-- Helper functions in `file_utils.py` handle extraction and download
-
-**Built-in Skills:**
-
-- `xlsx` - Excel workbooks with formulas and charts
-- `pptx` - PowerPoint presentations
-- `pdf` - PDF documents
-- `docx` - Word documents
-
-## Development Gotchas
-
-### 1. SDK Version
-
-**Important**: Ensure you have the Anthropic SDK version 0.71.0 or later with Skills support
-
-```bash
-pip install anthropic>=0.71.0
-# Restart Jupyter kernel after installation if upgrading!
-```
-
-### 2. Beta Namespace Required
-
-**Problem**: `container` parameter not recognized, files API fails
-**Solution**: Use `client.beta.messages.create()` and `client.beta.files.*`
-
-```python
-# ❌ Wrong
-response = client.messages.create(container={...})
-content = client.files.content(file_id)
-
-# ✅ Correct
-response = client.beta.messages.create(container={...})
-content = client.beta.files.content(file_id)
-```
-
-### 3. Beta Headers Placement
-
-**Problem**: Setting Skills beta in default_headers requires code_execution on ALL requests
-**Solution**: Use `betas` parameter per-request instead
-
-```python
-# ❌ Wrong (affects all requests)
-client = Anthropic(default_headers={"anthropic-beta": "skills-2025-10-02"})
-
-# ✅ Correct (per-request)
-response = client.beta.messages.create(
-    betas=["code-execution-2025-08-25", "files-api-2025-04-14", "skills-2025-10-02"],
-    ...
-)
-```
-
-### 4. File ID Extraction
-
-**Problem**: Response structure differs from standard Messages API
-**Solution**: File IDs in `bash_code_execution_tool_result.content.content[0].file_id`
-
-```python
-# Use file_utils.extract_file_ids() - handles beta response structure
-from file_utils import extract_file_ids, download_all_files
-file_ids = extract_file_ids(response)
-```
-
-### 5. Files API Response Objects
-
-**Problem**: `'BinaryAPIResponse' object has no attribute 'content'`, `'FileMetadata' object has no attribute 'size'`
-**Solution**: Use `.read()` for file content and `.size_bytes` for file size
-
-```python
-# ❌ Wrong
-file_content = client.beta.files.download(file_id)
-with open(path, 'wb') as f:
-    f.write(file_content.content)  # No .content attribute!
-
-# ✅ Correct
-file_content = client.beta.files.download(file_id)
-with open(path, 'wb') as f:
-    f.write(file_content.read())  # Use .read()
-
-# FileMetadata fields: id, filename, size_bytes (not size), mime_type, created_at, type, downloadable
-metadata = client.beta.files.retrieve_metadata(file_id)
-print(f"Size: {metadata.size_bytes} bytes")  # Use size_bytes, not size
-```
-
-### 6. Jupyter Kernel Selection
-
-**Problem**: Wrong Python interpreter = wrong dependencies
-**Solution**: Always select venv kernel in VSCode/Jupyter
-
-- VSCode: Cmd+Shift+P → "Python: Select Interpreter" → select venv
-- Jupyter: Kernel → Change Kernel → select venv
-
-### 7. Module Reload Required
-
-**Problem**: Changes to `file_utils.py` not reflected in running notebooks
-**Solution**: Restart kernel or reload module
-
-```python
-import importlib
-importlib.reload(file_utils)
-```
-
-### 8. Document Generation Times
-
-**Problem**: File creation takes longer than typical API calls, users may think cell is frozen
-**Actual Observed Times:**
-
-- Excel: ~2 minutes
-- PowerPoint: ~1-2 minutes (simple 2-3 slide presentations)
-- PDF: ~1-2 minutes
-
-**Solution**: Add clear timing expectations before file creation cells
-
-```markdown
-**⏱️ Note**: Excel generation typically takes 1-2 minutes.
-Be patient - the cell will show [*] while running!
-```
-
-**Important**: Keep examples simple and focused. Generation times are consistent at 1-2 minutes for well-scoped examples.
-
-## Common Tasks
-
-### Adding a New Notebook Section
-
-1. Follow existing structure in `01_skills_introduction.ipynb`
-2. Include setup cell with imports and beta headers
-3. Show API call, response handling, file download
-4. Add error handling examples
-5. Update `docs/skills_cookbook_plan.md` checklist
-
-### Creating Sample Data
-
-1. Add realistic financial data to `sample_data/`
-2. Use CSV for tabular, JSON for structured
-3. Include headers and proper formatting
-4. Reference in notebook with pandas
-5. Keep file sizes reasonable (<100KB)
-
-### Testing File Download
-
-1. Run notebook cell to generate file
-2. Check response for file_id
-3. Use `download_all_files()` helper
-4. Verify file in `outputs/` directory
-5. Open file in native app to validate
-
-**Note**: Files are overwritten by default. You'll see `[overwritten]` in the download summary when a file already existed. Set `overwrite=False` to prevent this.
-
-### Debugging API Errors
-
-1. Check SDK version: `anthropic.__version__` should be `0.69.0`
-2. Verify beta headers are passed per-request
-3. Ensure code_execution tool is included
-4. Check response structure with `print(response)`
-5. Look for error details in `response.stop_reason`
-
-## Testing Checklist
-
-Before committing notebook changes:
-
-- [ ] Restart kernel and run all cells
-- [ ] Verify all file downloads work
-- [ ] Check outputs/ for generated files
-- [ ] Validate files open correctly in native apps
-- [ ] Update skills_cookbook_plan.md checklist
-- [ ] Test in fresh virtual environment
-
-## Resources
-
-- **API Reference**: <https://docs.claude.com/en/api/messages>
-- **Files API**: <https://docs.claude.com/en/api/files-content>
-- **Skills Documentation**: <https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview>
-
-## Project-Specific Notes
-
-- **Focus Domain**: Finance & Analytics with practical business applications
-- **Target Audience**: Intermediate developers and business analysts
-- **Notebook 1**: Complete and tested (file downloads working)
-- **Notebook 2**: Financial Applications - next priority
-- **Notebook 3**: Custom Skills Development - after Notebook 2
-
-## Environment Variables
-
-Required in `.env`:
-
-```bash
-ANTHROPIC_API_KEY=your-api-key-here
-```
-
-Optional (for advanced examples):
-
-```bash
-ANTHROPIC_BASE_URL=https://api.anthropic.com  # If using proxy
-```
+## When Adding New Skills
+
+1. Follow the `SKILL.md` frontmatter standard (name + description required)
+2. Keep descriptions under 200 characters — they determine auto-activation
+3. Use the menu/modular pattern for multi-workflow skills
+4. Include examples of expected output in the skill
+5. Test with multiple prompt variations before committing
+6. Do not hardcode API keys, passwords, or secrets in skill files
+7. Place the skill in the correct category folder (`roles/` or `domain/`)
