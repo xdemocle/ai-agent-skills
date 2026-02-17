@@ -1,6 +1,6 @@
 # Stackformers Agent Skills
 
-An agnostic collection of AI Agent Skills — reusable expertise packages that make AI agents better at specialized tasks across any platform.
+An agnostic collection of AI Agent Skills — reusable expertise packages that make AI agents better at specialized tasks across any platform by [stackformers](https://stackformers.cc).
 
 ## What are Skills?
 
