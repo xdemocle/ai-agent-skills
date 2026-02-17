@@ -120,5 +120,5 @@ When a chart would communicate results more effectively than a table:
 
 - Be specific about time ranges, segments, or metrics when possible
 - If you know the table names, mention them to speed up the process
-- For complex questions, Claude may break them into multiple queries
-- Results are always validated before presentation -- if something looks off, Claude will flag it
+- For complex questions, the agent may break them into multiple queries
+- Results are always validated before presentation -- if something looks off, the agent will flag it

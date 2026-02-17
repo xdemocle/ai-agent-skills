@@ -1,11 +1,11 @@
 ---
 name: memory-management
-description: Two-tier memory system that makes Claude a true workplace collaborator. Decodes shorthand, acronyms, nicknames, and internal language so Claude understands requests like a colleague would. CLAUDE.md for working memory, memory/ directory for the full knowledge base.
+description: Two-tier memory system that makes the agent a true workplace collaborator. Decodes shorthand, acronyms, nicknames, and internal language so the agent understands requests like a colleague would. MEMORY.md for working memory, memory/ directory for the full knowledge base.
 ---
 
 # Memory Management
 
-Memory makes Claude your workplace collaborator - someone who speaks your internal language.
+Memory makes the agent your workplace collaborator - someone who speaks your internal language.
 
 ## The Goal
 
@@ -13,12 +13,12 @@ Transform shorthand into understanding:
 
 ```
 User: "ask todd to do the PSR for oracle"
-              ↓ Claude decodes
+              ↓ Agent decodes
 "Ask Todd Martinez (Finance lead) to prepare the Pipeline Status Report
  for the Oracle Systems deal ($2.3M, closing Q2)"
 ```
 
-Without memory, that request is meaningless. With memory, Claude knows:
+Without memory, that request is meaningless. With memory, the agent knows:
 
 - **todd** → Todd Martinez, Finance lead, prefers Slack
 - **PSR** → Pipeline Status Report (weekly sales doc)
@@ -273,7 +273,7 @@ CLAUDE.md lookup:
 memory/glossary.md lookup:
   "oracle" → Oracle Systems deal ($2.3M) ✓
 
-Now Claude can act with full context.
+Now the agent can act with full context.
 ```
 
 ### Adding Memory

@@ -96,24 +96,9 @@ Skills encoding expertise for specific fields — financial analysis, code revie
 
 ## Platform Compatibility
 
-Skills are portable by design. The same `SKILL.md` works across:
+Skills are portable by design. The same `SKILL.md` works across any platform that supports the [Agent Skills standard](https://agentskills.io). How skills are loaded depends on the platform — some use file uploads, others use directory conventions or API endpoints.
 
-| Platform         | How skills are loaded                                  |
-| ---------------- | ------------------------------------------------------ |
-| **Claude.ai**    | Upload as ZIP via Settings > Capabilities > Skills     |
-| **Claude Code**  | Place in `.claude/skills/` directory (auto-discovered) |
-| **Claude API**   | Upload via `/v1/skills` endpoint                       |
-| **Other agents** | Any platform supporting the Agent Skills standard      |
-
-### Claude Code discovery paths
-
-```
-~/.config/claude/skills/    # Personal (available in all projects)
-.claude/skills/             # Project-level (committed to version control)
-packages/*/. claude/skills/  # Monorepo subdirectory skills
-```
-
-Priority: enterprise > personal > project.
+See your platform's documentation for specific setup instructions.
 
 ### Connectors
 
@@ -193,7 +178,7 @@ The skills in this collection are starting points. They become much more useful 
 
 **Reporting & Analysis** — Automated quarterly reports, budget variance analysis, KPI dashboards, portfolio reviews.
 
-**Document Automation** — Branded presentations, cross-format conversion (CSV → Excel → PowerPoint → PDF), template-based generation.
+**Document Automation** — Template-based generation, cross-format conversion, branded output, structured reports.
 
 **Workflow Standardization** — Code review processes, onboarding procedures, compliance checklists, content approval flows.
 
@@ -228,10 +213,13 @@ ai-agent-skills/
 ## Resources
 
 - [Agent Skills Open Standard](https://agentskills.io) — Cross-platform specification
-- [Anthropic Skills Repository](https://github.com/anthropics/skills) — Reference implementations
-- [Skills Best Practices](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices) — Authoring guidelines
+
+### Further reading
+
+- [Anthropic Skills Repository](https://github.com/anthropics/skills) — Reference implementations (Anthropic-specific)
+- [Skills Best Practices](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices) — Authoring guidelines (Anthropic-specific)
 - [Equipping Agents with Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) — Engineering deep dive
-- [Skills Explained](https://claude.com/blog/skills-explained) — How skills compare to prompts, projects, MCP, and subagents
+- [Skills Explained](https://claude.com/blog/skills-explained) — Concepts: how skills compare to prompts, projects, MCP, and subagents
 
 ## License
 

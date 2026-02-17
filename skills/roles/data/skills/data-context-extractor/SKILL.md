@@ -11,7 +11,7 @@ description: >
   "Update the data skill with [metrics/tables/terminology]", "Improve the [domain] reference"
   → Loads existing skill, asks targeted questions, appends/updates reference files
 
-  Use when data analysts want Claude to understand their company's specific data warehouse,
+  Use when data analysts want the agent to understand their company's specific data warehouse,
   terminology, metrics definitions, and common query patterns.
 ---
 

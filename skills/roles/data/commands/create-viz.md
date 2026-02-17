@@ -154,7 +154,7 @@ plt.show()
 
 ## Tips
 
-- If you want interactive charts (hover, zoom, filter), mention "interactive" and Claude will use plotly
+- If you want interactive charts (hover, zoom, filter), mention "interactive" and the agent will use plotly
 - Specify "presentation" if you need larger fonts and higher contrast
 - You can request multiple charts at once (e.g., "create a 2x2 grid of charts showing...")
 - Charts are saved to your current directory as PNG files

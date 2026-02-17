@@ -123,6 +123,6 @@ If a data warehouse is connected, offer to run the query and analyze the results
 ## Tips
 
 - Mention your SQL dialect upfront to get the right syntax immediately
-- If you know the table names, include them -- otherwise Claude will help you find them
+- If you know the table names, include them -- otherwise the agent will help you find them
 - Specify if you need the query to be idempotent (safe to re-run) or one-time
 - For recurring queries, mention if it should be parameterized for date ranges
