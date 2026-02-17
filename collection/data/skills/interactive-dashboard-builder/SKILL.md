@@ -166,43 +166,43 @@ function createLineChart(canvasId, labels, datasets) {
         fill: ds.fill || false,
         tension: 0.3,
         pointRadius: 3,
-        pointHoverRadius: 6,
-      })),
+        pointHoverRadius: 6
+      }))
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       interaction: {
         mode: "index",
-        intersect: false,
+        intersect: false
       },
       plugins: {
         legend: {
           position: "top",
-          labels: { usePointStyle: true, padding: 20 },
+          labels: { usePointStyle: true, padding: 20 }
         },
         tooltip: {
           callbacks: {
             label: function (context) {
               return `${context.dataset.label}: ${formatValue(context.parsed.y, "currency")}`;
-            },
-          },
-        },
+            }
+          }
+        }
       },
       scales: {
         x: {
-          grid: { display: false },
+          grid: { display: false }
         },
         y: {
           beginAtZero: true,
           ticks: {
             callback: function (value) {
               return formatValue(value, "currency");
-            },
-          },
-        },
-      },
-    },
+            }
+          }
+        }
+      }
+    }
   });
 }
 ```
@@ -225,9 +225,9 @@ function createBarChart(canvasId, labels, data, options = {}) {
           backgroundColor: options.colors || COLORS.map((c) => c + "CC"),
           borderColor: options.colors || COLORS,
           borderWidth: 1,
-          borderRadius: 4,
-        },
-      ],
+          borderRadius: 4
+        }
+      ]
     },
     options: {
       responsive: true,
@@ -239,9 +239,9 @@ function createBarChart(canvasId, labels, data, options = {}) {
           callbacks: {
             label: function (context) {
               return formatValue(context.parsed[isHorizontal ? "x" : "y"], options.format || "number");
-            },
-          },
-        },
+            }
+          }
+        }
       },
       scales: {
         x: {
@@ -251,9 +251,9 @@ function createBarChart(canvasId, labels, data, options = {}) {
             ? {
                 callback: function (value) {
                   return formatValue(value, options.format || "number");
-                },
+                }
               }
-            : {},
+            : {}
         },
         y: {
           beginAtZero: !isHorizontal,
@@ -262,12 +262,12 @@ function createBarChart(canvasId, labels, data, options = {}) {
             ? {
                 callback: function (value) {
                   return formatValue(value, options.format || "number");
-                },
+                }
               }
-            : {},
-        },
-      },
-    },
+            : {}
+        }
+      }
+    }
   });
 }
 ```
@@ -286,9 +286,9 @@ function createDoughnutChart(canvasId, labels, data) {
           data: data,
           backgroundColor: COLORS.map((c) => c + "CC"),
           borderColor: "#ffffff",
-          borderWidth: 2,
-        },
-      ],
+          borderWidth: 2
+        }
+      ]
     },
     options: {
       responsive: true,
@@ -297,7 +297,7 @@ function createDoughnutChart(canvasId, labels, data) {
       plugins: {
         legend: {
           position: "right",
-          labels: { usePointStyle: true, padding: 15 },
+          labels: { usePointStyle: true, padding: 15 }
         },
         tooltip: {
           callbacks: {
@@ -305,11 +305,11 @@ function createDoughnutChart(canvasId, labels, data) {
               const total = context.dataset.data.reduce((a, b) => a + b, 0);
               const pct = ((context.parsed / total) * 100).toFixed(1);
               return `${context.label}: ${formatValue(context.parsed, "number")} (${pct}%)`;
-            },
-          },
-        },
-      },
-    },
+            }
+          }
+        }
+      }
+    }
   });
 }
 ```
@@ -769,18 +769,18 @@ const RAW_DATA = [
 const CHART_DATA = {
   monthly_revenue: [
     { month: "2024-01", revenue: 150000, orders: 1200 },
-    { month: "2024-02", revenue: 165000, orders: 1350 },
+    { month: "2024-02", revenue: 165000, orders: 1350 }
     // ... 12 rows instead of 50,000
   ],
   top_products: [
-    { product: "Widget A", revenue: 45000 },
+    { product: "Widget A", revenue: 45000 }
     // ... 10 rows
   ],
   kpis: {
     total_revenue: 1980000,
     total_orders: 15600,
-    avg_order_value: 127,
-  },
+    avg_order_value: 127
+  }
 };
 ```
 

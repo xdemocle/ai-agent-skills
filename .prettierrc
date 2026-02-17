@@ -1,5 +1,14 @@
 {
   "tabWidth": 2,
   "useTabs": false,
-  "printWidth": 999
+  "printWidth": 120,
+  "overrides": [
+    {
+      "files": "*.{json,md,ipynb}",
+      "options": {
+        "printWidth": 999,
+        "trailingComma": "none"
+      }
+    }
+  ]
 }
